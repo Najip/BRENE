@@ -88,6 +88,12 @@ if [[ "${config_show_refresh_rate}" == "1" ]]; then
 	service call SurfaceFlinger 1034 i32 1
 fi
 
+# Set logcat and logd buffer to 64K
+if [[ "${config_shrink_buffer_size}" == "1" ]]; then
+	logcat -G 64K
+	resetprop -n -p persist.logd.size 65536
+fi
+
 # SELinux Enforcing
 if [[ "${config_selinux}" == "1" ]]; then
 	[[ "$(getenforce)" != "Enforcing" ]] && setenforce 1
