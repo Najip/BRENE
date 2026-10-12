@@ -75,7 +75,7 @@ fi
 
 # Disable Child Process Restrictions
 if [[ "${config_disable_child_process_restrictions}" == "1" ]]; then
-	resetprop_n persist.sys.fflag.override.settings_enable_monitor_phantom_procs false
+	resetprop -n -p persist.sys.fflag.override.settings_enable_monitor_phantom_procs false
 fi
 
 # Max Saturation
