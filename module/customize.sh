@@ -69,6 +69,9 @@ ${KSU_BIN} module config set override.description "[Status: ${status} | Kernel V
 echo "[✅] Preparing brene persistent directory (${PERSISTENT_DIR})"
 mkdir -p "${PERSISTENT_DIR}"
 
+# Backup SuSFS binary
+cp -pf "${DEST_BIN_DIR}/susfs" "${PERSISTENT_DIR}"
+
 files="
 custom_sus_map.txt
 custom_kernel_umount.txt
