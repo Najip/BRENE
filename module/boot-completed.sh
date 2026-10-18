@@ -75,7 +75,7 @@ fi
 
 # Disable Child Process Restrictions
 if [[ "${config_disable_child_process_restrictions}" == "1" ]]; then
-	resetprop -n -p persist.sys.fflag.override.settings_enable_monitor_phantom_procs false
+	resetprop -n persist.sys.fflag.override.settings_enable_monitor_phantom_procs false
 fi
 
 # Max Saturation
@@ -91,7 +91,7 @@ fi
 # Set logcat and logd buffer to 64K
 if [[ "${config_shrink_buffer_size}" == "1" ]]; then
 	logcat -G 64K
-	resetprop -n -p persist.logd.size 65536
+	resetprop -n persist.logd.size 65536
 fi
 
 # SELinux Enforcing
