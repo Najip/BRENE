@@ -193,13 +193,6 @@ fi
 if [[ "${config_spoof_vendor_security_patch_level_property}" == "1" ]]; then
 	spoof_vendor_security_patch_level_property
 fi
-# Spoof System Properties Every Minute
-if [[ "${config_spoof_system_properties_repeat}" == "1" ]]; then
-	while true; do
-		sleep 60
-		spoof_system_properties
-	done &
-fi
 
 ## Remove the '..5.u.S' leftover ##
 ## THe reason why this sus file is created is because users have grant the MANAGE_EXTERNAL_STORAGE permission for the apps that detecting sus files in /storage/emulated/0, or in /storage/emulated/0/Android/data where the apps are exploiting the unicode bugs to create files arbitrary.
