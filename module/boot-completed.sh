@@ -216,14 +216,14 @@ inotifyd "${MODDIR}/inotify.sh" /storage/emulated/0:n &
 
 # Paths Hiding
 
-# Hide Custom Recovery Paths
+# Hide Custom Recovery
 if [[ "${config_hide_custom_recovery}" == "1" ]]; then
 	if [[ "${config_brene_logs}" == "1" ]]; then
 		{
 			echo ""
-			echo "##########################"
-			echo "Hide Custom Recovery Paths"
-			echo "##########################"
+			echo "####################"
+			echo "Hide Custom Recovery"
+			echo "####################"
 		} >> "${PERSISTENT_DIR}/logs.txt"
 	fi
 
