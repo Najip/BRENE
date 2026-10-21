@@ -211,6 +211,14 @@ TARGET4="/storage/emulated/0/Android/obb/${TARGET}"
 rm -rf "${TARGET1}" "${TARGET2}" "${TARGET3}" "${TARGET4}"
 inotifyd "${MODDIR}/inotify.sh" /storage/emulated/0:n &
 
+# Hide KernelSU directories
+if [[ "${config_hide_ksu_directories}" == "1" ]]; then
+	sh "${MODDIR}/remove_ksu_directory.sh"
+	inotifyd "${MODDIR}/remove_ksu_directory.sh" /storage/emulated/0/Android/data:n &
+	inotifyd "${MODDIR}/remove_ksu_directory.sh" /storage/emulated/0/Android/media:n &
+	inotifyd "${MODDIR}/remove_ksu_directory.sh" /storage/emulated/0/Android/obb:n &
+fi
+
 ## For paths that are frequently modified, we can add them via 'add_sus_path_loop' ##
 ## Be reminded that without HMA's vold app data enabled, added sus_paths are still vulnerable to zwc exploit, so in this case users also have to add its underlying path as well ##
 
