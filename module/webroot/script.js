@@ -66,6 +66,7 @@ const configs = [
 	{ id: 'hide_lineage_strings' },
 	{ id: 'spoof_libstagefright' },
 	{ id: 'hide_ksu_directories' },
+	{ id: 'hide_third_party_apps' },
 	{ id: 'hide_custom_rom_paths' },
 	{ id: 'hide_custom_rom_paths_2' },
 	{ id: 'hide_framework_res_apk' },

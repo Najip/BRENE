@@ -425,6 +425,12 @@ if [[ "${config_fix_data_local_tmp_inconsistencies}" == "1" ]]; then
 	${SUSFS_BIN} add_sus_kstat_statically "${target_folder}" '100' 'default' 'default' '4096' 'default' 'default' 'default' 'default' 'default' 'default' '8' '4096'
 fi
 
+# Hide third party apps
+if [[ "${config_hide_third_party_apps}" == "1" ]]; then
+	packages=$(pm list packages -3 | awk -F: '{out = out (out ? "," : "") $2} END {print out}')
+	${SUSFS_BIN} set_priority_uid_filter "${packages}"
+fi
+
 resetprop -c --force
 
 if [[ "${config_brene_logs}" == "1" ]]; then
