@@ -31,7 +31,7 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "zip_name=BRENE-${VERSION}.zip" >> "$GITHUB_OUTPUT"
 
-      - name: Build direct flashable ZIP
+      - name: Build flashable ZIP
         shell: bash
         run: |
           set -euo pipefail
@@ -43,9 +43,9 @@ jobs:
           )
           ls -lh dist
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
         with:
-          name: BRENE-module-${{ steps.version.outputs.version }}
-          path: dist/*.zip
-          if-no-files-found: error
+          files: dist/*.zip
+          generate_release_notes: true
