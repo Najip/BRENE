@@ -22,28 +22,26 @@ jobs:
         id: version
         shell: bash
         run: |
-          set -e
-          VERSION=$(grep -E '^version=' module/module.prop | cut -d= -f2 | tr -d '\r')
-          if [ -z "$VERSION" ]; do
+          set -euo pipefail
+          VERSION=$(sed -n 's/^version=//p' module/module.prop | head -n 1 | tr -d '\r')
+          if [ -z "$VERSION" ]; then
             echo "Unable to find module version in module/module.prop"
             exit 1
           fi
-          ZIP_NAME="BRENE-${VERSION}.zip"
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "zip_name=${ZIP_NAME}" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "zip_name=BRENE-${VERSION}.zip" >> "$GITHUB_OUTPUT"
 
       - name: Build flashable KernelSU ZIP
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
           mkdir -p dist
-          cd module
-          zip -r "../dist/${{ steps.version.outputs.zip_name }}" . \
-            -x "*.DS_Store" \
-            -x "*/.DS_Store" \
-            -x "*.git*" \
-            -x "*/.git*"
-          cd ..
+          rm -f "dist/${{ steps.version.outputs.zip_name }}"
+          zip -qr "dist/${{ steps.version.outputs.zip_name }}" module \
+            -x "module/.git/*" \
+            -x "module/.gitignore" \
+            -x "module/.DS_Store" \
+            -x "module/**/.DS_Store"
           ls -lh dist
 
       - name: Upload ZIP as artifact
