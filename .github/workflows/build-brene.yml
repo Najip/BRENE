@@ -18,33 +18,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Read module version
+      - name: Read version
         id: version
         shell: bash
         run: |
           set -euo pipefail
           VERSION=$(sed -n 's/^version=//p' module/module.prop | head -n 1 | tr -d '\r')
           if [ -z "$VERSION" ]; then
-            echo "Unable to find module version in module/module.prop"
+            echo "Version not found in module/module.prop"
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "zip_name=BRENE-${VERSION}.zip" >> "$GITHUB_OUTPUT"
 
-      - name: Build flashable KernelSU ZIP
+      - name: Build direct flashable ZIP
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p dist
           rm -f "dist/${{ steps.version.outputs.zip_name }}"
-          zip -qr "dist/${{ steps.version.outputs.zip_name }}" module \
-            -x "module/.git/*" \
-            -x "module/.gitignore" \
-            -x "module/.DS_Store" \
-            -x "module/**/.DS_Store"
+          (
+            cd module
+            zip -qr "../dist/${{ steps.version.outputs.zip_name }}" .
+          )
           ls -lh dist
 
-      - name: Upload ZIP as artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: BRENE-module-${{ steps.version.outputs.version }}
