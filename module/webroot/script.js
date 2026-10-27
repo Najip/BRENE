@@ -35,10 +35,6 @@ const configs = [
 		action: (enabled) => setFeature(`settings put global adb_wifi_enabled ${enabled ? 1 : 0}`),
 	},
 	{
-		id: 'selinux',
-		action: (enabled) => setFeature(`setenforce ${enabled ? 1 : 0}`),
-	},
-	{
 		id: 'saturation',
 		action: (enabled) => setFeature(`service call SurfaceFlinger 1022 f ${enabled ? 2.0 : 1.0}`),
 	},
