@@ -1,5 +1,7 @@
 # shellcheck disable=SC2154
 # shellcheck disable=SC2148
+sleep 1
+
 remove_directory() {
 	if [[ -z "$1" ]]; then
 		return 1
